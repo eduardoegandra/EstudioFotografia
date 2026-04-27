@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sandra Amaral Fotografia | Gestante, Newborn e Família</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header id="header">
+        <div class="logo">Sandra Amaral</div>
+
+        <nav id="main-nav">
+            <ul>
+                <li><a href="#inicio">Início</a></li>
+                <li class="has-submenu">
+                    <a href="portfolio.html">Portfólio ▾</a>
+                    <ul class="submenu">
+                        <li><a href="portfolio.html?filter=gestante">Gestante</a></li>
+                        <li><a href="portfolio.html?filter=newborn">Newborn</a></li>
+                        <li><a href="portfolio.html?filter=familia">Família</a></li>
+                    </ul>
+                </li>
+                <li><a href="pacotes.html">Pacotes</a></li>
+                <li><a href="#contato" class="nav-cta">Agendar</a></li>
+            </ul>
+        </nav>
+
+        <button class="hamburger" id="hamburger" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+    </header>
+
+    <!-- MENU MOBILE OVERLAY -->
+    <div class="mobile-overlay" id="mobile-overlay">
+        <button class="close-btn" id="close-menu">✕</button>
+        <nav>
+            <ul>
+                <li><a href="#inicio" class="mob-link">Início</a></li>
+                <li><a href="portfolio.html" class="mob-link">Portfólio</a></li>
+                <li><a href="pacotes.html" class="mob-link">Pacotes</a></li>
+                <li><a href="#sobre" class="mob-link">Sobre</a></li>
+                <li><a href="#contato" class="mob-link">Contato</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- HERO -->
+    <section id="inicio" class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content reveal">
+            <span class="hero-label">Estúdio de Fotografia</span>
+            <h1>Eternizando o amor<br><em>da sua família</em></h1>
+            <p>Especialista em capturar a pureza dos primeiros dias e a beleza da maternidade.<br>Atendimento exclusivo no Barreiro e região de Belo Horizonte.</p>
+            <a href="#contato" class="btn">Agendar meu Ensaio</a>
+        </div>
+        <div class="hero-scroll-hint">
+            <span>Role para baixo</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- SOBRE -->
+    <section id="sobre" class="about-section">
+        <div class="about-img reveal">
+            <img src="assets/img/mae.jpg" alt="Sandra Amaral">
+        </div>
+        <div class="about-text reveal">
+            <span class="hero-label">Sobre mim</span>
+            <h2>Sandra Amaral</h2>
+            <p>Sou apaixonada por contar histórias reais através das minhas lentes. Meu propósito é guardar para sempre os detalhes que o tempo leva rápido demais: a barriga crescendo, os dedinhos minúsculos de um recém-nascido e o amor que transborda em uma família.</p>
+            <p>Com um olhar sensível e atendimento exclusivo, cada ensaio é pensado para que você se sinta completamente à vontade — e o resultado seja muito além do esperado.</p>
+            <a href="https://wa.me/5531988744077?text=Ol%C3%A1%2C+Sandra!+Gostaria+de+saber+mais+sobre+seu+trabalho." target="_blank" class="btn">Vamos conversar</a>
+        </div>
+    </section>
+
+    <!-- FEEDBACKS -->
+    <section id="feedbacks" class="reviews-section">
+        <div class="section-header reveal">
+            <h2>O que dizem por aí</h2>
+            <p class="section-sub">A opinião de quem já viveu essa experiência</p>
+        </div>
+
+        <div class="reviews-track-wrapper">
+            <div class="reviews-track" id="reviews-track">
+
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <p class="review-text">"A Sandra capturou cada detalhe do nosso newborn com uma delicadeza incrível. As fotos ficaram lindas demais, a gente chora toda vez que abre a galeria!"</p>
+                    <div class="review-author">
+                        <div class="review-avatar">A</div>
+                        <div>
+                            <strong>Ana Paula M.</strong>
+                            <span>Ensaio Newborn</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <p class="review-text">"Estava com muito medo de não saber posar, mas a Sandra me deixou completamente à vontade. O ensaio gestante foi uma experiência inesquecível!"</p>
+                    <div class="review-author">
+                        <div class="review-avatar">C</div>
+                        <div>
+                            <strong>Camila R.</strong>
+                            <span>Ensaio Gestante</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <p class="review-text">"Super profissional e atenciosa! Meu bebê dormiu durante todo o ensaio e as fotos ficaram perfeitas. Recomendo de olhos fechados para todas as mamães!"</p>
+                    <div class="review-author">
+                        <div class="review-avatar">F</div>
+                        <div>
+                            <strong>Fernanda L.</strong>
+                            <span>Ensaio Newborn</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <p class="review-text">"Fizemos o ensaio de família e foi muito melhor do que esperávamos. As crianças adoraram e as fotos transmitem exatamente o amor que sentimos. Obrigada, Sandra!"</p>
+                    <div class="review-author">
+                        <div class="review-avatar">J</div>
+                        <div>
+                            <strong>Juliana e Pedro T.</strong>
+                            <span>Ensaio de Família</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <p class="review-text">"Já fiz o ensaio gestante e o newborn com a Sandra. Simplesmente não existe outra fotógrafa para mim. Ela tem um dom especial para eternizar o amor!"</p>
+                    <div class="review-author">
+                        <div class="review-avatar">M</div>
+                        <div>
+                            <strong>Mariana S.</strong>
+                            <span>Gestante &amp; Newborn</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Duplicatas para loop infinito suave -->
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <p class="review-text">"A Sandra capturou cada detalhe do nosso newborn com uma delicadeza incrível. As fotos ficaram lindas demais, a gente chora toda vez que abre a galeria!"</p>
+                    <div class="review-author">
+                        <div class="review-avatar">A</div>
+                        <div>
+                            <strong>Ana Paula M.</strong>
+                            <span>Ensaio Newborn</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <p class="review-text">"Estava com muito medo de não saber posar, mas a Sandra me deixou completamente à vontade. O ensaio gestante foi uma experiência inesquecível!"</p>
+                    <div class="review-author">
+                        <div class="review-avatar">C</div>
+                        <div>
+                            <strong>Camila R.</strong>
+                            <span>Ensaio Gestante</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="review-card">
+                    <div class="review-stars">★★★★★</div>
+                    <p class="review-text">"Super profissional e atenciosa! Meu bebê dormiu durante todo o ensaio e as fotos ficaram perfeitas. Recomendo de olhos fechados para todas as mamães!"</p>
+                    <div class="review-author">
+                        <div class="review-avatar">F</div>
+                        <div>
+                            <strong>Fernanda L.</strong>
+                            <span>Ensaio Newborn</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="reviews-dots" id="reviews-dots"></div>
+    </section>
+
+    <!-- FOOTER / CONTATO -->
+    <footer id="contato">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <div class="logo footer-logo">Sandra Amaral</div>
+                <p>Estúdio de Fotografia<br>Barreiro, Belo Horizonte — MG</p>
+            </div>
+            <div class="footer-cta">
+                <h2>Vamos criar memórias?</h2>
+                <p>Entre em contato para conversarmos sobre o ensaio dos seus sonhos!</p>
+                <a href="https://wa.me/5531988744077?text=Ol%C3%A1%2C%20Sandra!%20Vi%20seu%20site%20e%20gostaria%20de%20fazer%20um%20or%C3%A7amento." target="_blank" class="btn whatsapp-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:middle;margin-right:8px"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                    Chamar no WhatsApp
+                </a>
+            </div>
+        </div>
+        <p class="copyright">&copy; 2026 Sandra Amaral Fotografia. Todos os direitos reservados.</p>
+    </footer>
+
+    <!-- BOTÃO FLUTUANTE WHATSAPP -->
+    <a href="https://wa.me/5531988744077?text=Ol%C3%A1%2C%20Sandra!" target="_blank" class="whatsapp-float" aria-label="WhatsApp">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>
+
+    <script src="assets/js/script.js"></script>
+</body>
+</html>
