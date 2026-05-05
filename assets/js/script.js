@@ -133,25 +133,26 @@ function nextImage() {
 
 galleryItems.forEach((item, index) => {
     item.addEventListener('click', () => {
-        // pega o índice dentro dos visíveis
         visibleItems = getVisible();
         const visIndex = visibleItems.indexOf(item);
         if (visIndex !== -1) openLightbox(visIndex);
     });
 });
 
-lbClose.addEventListener('click', closeLightbox);
-lbPrev.addEventListener('click', prevImage);
-lbNext.addEventListener('click', nextImage);
+// ✅ Só adiciona os eventos se os elementos existirem (evita erro em pacotes.html)
+if (lbClose) lbClose.addEventListener('click', closeLightbox);
+if (lbPrev)  lbPrev.addEventListener('click', prevImage);
+if (lbNext)  lbNext.addEventListener('click', nextImage);
 
-// Fecha clicando fora da imagem
-lightbox.addEventListener('click', (e) => {
-    if (e.target === lightbox) closeLightbox();
-});
+if (lightbox) {
+    lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) closeLightbox();
+    });
+}
 
 // Navegação por teclado
 document.addEventListener('keydown', (e) => {
-    if (!lightbox.classList.contains('open')) return;
+    if (!lightbox || !lightbox.classList.contains('open')) return;
     if (e.key === 'Escape')     closeLightbox();
     if (e.key === 'ArrowLeft')  prevImage();
     if (e.key === 'ArrowRight') nextImage();
