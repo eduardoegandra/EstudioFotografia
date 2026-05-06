@@ -10,10 +10,10 @@ window.addEventListener('scroll', () => {
 // ============================================
 // 2. MENU HAMBURGUER (mobile)
 // ============================================
-const hamburger      = document.getElementById('hamburger');
-const mobileOverlay  = document.getElementById('mobile-overlay');
-const closeMenu      = document.getElementById('close-menu');
-const mobLinks       = document.querySelectorAll('.mob-link');
+const hamburger     = document.getElementById('hamburger');
+const mobileOverlay = document.getElementById('mobile-overlay');
+const closeMenu     = document.getElementById('close-menu');
+const mobLinks      = document.querySelectorAll('.mob-link');
 
 function openMenu() {
     mobileOverlay.classList.add('open');
@@ -34,46 +34,101 @@ mobLinks.forEach(link => link.addEventListener('click', closeMenuFn));
 // ============================================
 // 3. REVEAL ON SCROLL (animação de entrada)
 // ============================================
-const revealEls = document.querySelectorAll('.reveal');
-const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            revealObserver.unobserve(entry.target);
+function initReveal() {
+    const revealEls = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                revealObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.12 });
+    revealEls.forEach(el => revealObserver.observe(el));
+}
+initReveal();
+
+
+// ============================================
+// 4. GALERIA DINÂMICA (carrega do galeria.json)
+// ============================================
+const gallery = document.getElementById('gallery');
+
+async function carregarGaleria() {
+    if (!gallery) return;
+
+    try {
+        const res  = await fetch('galeria.json');
+        const fotos = await res.json();
+
+        // Limpa o "Carregando..."
+        gallery.innerHTML = '';
+
+        fotos.forEach((foto, index) => {
+            const item = document.createElement('div');
+            item.className = 'masonry-item reveal';
+            item.dataset.category = foto.category;
+            item.innerHTML = `
+                <img src="${foto.src}" alt="${foto.alt}" loading="lazy">
+                <div class="img-overlay"><span>${foto.label}</span></div>
+            `;
+            gallery.appendChild(item);
+        });
+
+        // Reinicia as animações de reveal para os novos elementos
+        initReveal();
+
+        // Inicializa filtros e lightbox depois que a galeria estiver pronta
+        initFiltros();
+        initLightbox();
+
+        // Aplica filtro da URL se houver (?filter=newborn)
+        const urlParams = new URLSearchParams(window.location.search);
+        const urlFilter = urlParams.get('filter');
+        if (urlFilter) {
+            applyFilter(urlFilter);
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.filter === urlFilter);
+            });
         }
-    });
-}, { threshold: 0.12 });
 
-revealEls.forEach(el => revealObserver.observe(el));
+    } catch (err) {
+        gallery.innerHTML = '<p style="text-align:center;color:#999;padding:40px;">Nenhuma foto encontrada. Execute o script gerar-galeria.py para atualizar a galeria.</p>';
+        console.warn('galeria.json não encontrado ou vazio.', err);
+    }
+}
+
+carregarGaleria();
 
 
 // ============================================
-// 4. FILTRO DE PORTFÓLIO
+// 5. FILTRO DE PORTFÓLIO
 // ============================================
-const filterBtns  = document.querySelectorAll('.filter-btn');
-const galleryItems = document.querySelectorAll('.masonry-item');
+function initFiltros() {
+    const filterBtns  = document.querySelectorAll('.filter-btn');
+    const galleryItems = document.querySelectorAll('.masonry-item');
 
-// Também filtra ao clicar nos links do submenu
-document.querySelectorAll('[data-filter]').forEach(link => {
-    link.addEventListener('click', (e) => {
-        const filter = link.dataset.filter;
-        applyFilter(filter);
-        // Ativa o botão correspondente
-        filterBtns.forEach(btn => {
-            btn.classList.toggle('active', btn.dataset.filter === filter);
+    document.querySelectorAll('[data-filter]').forEach(link => {
+        link.addEventListener('click', () => {
+            const filter = link.dataset.filter;
+            applyFilter(filter);
+            filterBtns.forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.filter === filter);
+            });
         });
     });
-});
 
-filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-        filterBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        applyFilter(btn.dataset.filter);
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            applyFilter(btn.dataset.filter);
+        });
     });
-});
+}
 
 function applyFilter(filter) {
+    const galleryItems = document.querySelectorAll('.masonry-item');
     galleryItems.forEach(item => {
         if (filter === 'all' || item.dataset.category === filter) {
             item.classList.remove('hidden');
@@ -85,82 +140,83 @@ function applyFilter(filter) {
 
 
 // ============================================
-// 5. LIGHTBOX
+// 6. LIGHTBOX
 // ============================================
-const lightbox  = document.getElementById('lightbox');
-const lbImg     = document.getElementById('lb-img');
-const lbCaption = document.getElementById('lb-caption');
-const lbClose   = document.getElementById('lb-close');
-const lbPrev    = document.getElementById('lb-prev');
-const lbNext    = document.getElementById('lb-next');
+function initLightbox() {
+    const lightbox  = document.getElementById('lightbox');
+    const lbImg     = document.getElementById('lb-img');
+    const lbCaption = document.getElementById('lb-caption');
+    const lbClose   = document.getElementById('lb-close');
+    const lbPrev    = document.getElementById('lb-prev');
+    const lbNext    = document.getElementById('lb-next');
 
-let visibleItems = [];
-let currentIndex = 0;
+    if (!lightbox) return;
 
-function getVisible() {
-    return [...galleryItems].filter(item => !item.classList.contains('hidden'));
-}
+    let visibleItems = [];
+    let currentIndex = 0;
 
-function openLightbox(index) {
-    visibleItems = getVisible();
-    currentIndex = index;
-    showImage(currentIndex);
-    lightbox.classList.add('open');
-    document.body.style.overflow = 'hidden';
-}
+    function getVisible() {
+        return [...document.querySelectorAll('.masonry-item')].filter(i => !i.classList.contains('hidden'));
+    }
 
-function closeLightbox() {
-    lightbox.classList.remove('open');
-    document.body.style.overflow = '';
-}
+    function openLightbox(index) {
+        visibleItems = getVisible();
+        currentIndex = index;
+        showImage(currentIndex);
+        lightbox.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
 
-function showImage(index) {
-    const item = visibleItems[index];
-    const img  = item.querySelector('img');
-    lbImg.src  = img.src;
-    lbImg.alt  = img.alt;
-    lbCaption.textContent = img.alt;
-}
+    function closeLightbox() {
+        lightbox.classList.remove('open');
+        document.body.style.overflow = '';
+    }
 
-function prevImage() {
-    currentIndex = (currentIndex - 1 + visibleItems.length) % visibleItems.length;
-    showImage(currentIndex);
-}
-function nextImage() {
-    currentIndex = (currentIndex + 1) % visibleItems.length;
-    showImage(currentIndex);
-}
+    function showImage(index) {
+        const item = visibleItems[index];
+        const img  = item.querySelector('img');
+        lbImg.src  = img.src;
+        lbImg.alt  = img.alt;
+        lbCaption.textContent = img.alt;
+    }
 
-galleryItems.forEach((item, index) => {
-    item.addEventListener('click', () => {
+    function prevImage() {
+        currentIndex = (currentIndex - 1 + visibleItems.length) % visibleItems.length;
+        showImage(currentIndex);
+    }
+    function nextImage() {
+        currentIndex = (currentIndex + 1) % visibleItems.length;
+        showImage(currentIndex);
+    }
+
+    // Delegação de eventos para itens criados dinamicamente
+    gallery.addEventListener('click', (e) => {
+        const item = e.target.closest('.masonry-item');
+        if (!item) return;
         visibleItems = getVisible();
         const visIndex = visibleItems.indexOf(item);
         if (visIndex !== -1) openLightbox(visIndex);
     });
-});
 
-// ✅ Só adiciona os eventos se os elementos existirem (evita erro em pacotes.html)
-if (lbClose) lbClose.addEventListener('click', closeLightbox);
-if (lbPrev)  lbPrev.addEventListener('click', prevImage);
-if (lbNext)  lbNext.addEventListener('click', nextImage);
+    lbClose.addEventListener('click', closeLightbox);
+    lbPrev.addEventListener('click', prevImage);
+    lbNext.addEventListener('click', nextImage);
 
-if (lightbox) {
     lightbox.addEventListener('click', (e) => {
         if (e.target === lightbox) closeLightbox();
     });
-}
 
-// Navegação por teclado
-document.addEventListener('keydown', (e) => {
-    if (!lightbox || !lightbox.classList.contains('open')) return;
-    if (e.key === 'Escape')     closeLightbox();
-    if (e.key === 'ArrowLeft')  prevImage();
-    if (e.key === 'ArrowRight') nextImage();
-});
+    document.addEventListener('keydown', (e) => {
+        if (!lightbox.classList.contains('open')) return;
+        if (e.key === 'Escape')     closeLightbox();
+        if (e.key === 'ArrowLeft')  prevImage();
+        if (e.key === 'ArrowRight') nextImage();
+    });
+}
 
 
 // ============================================
-// 6. ACTIVE LINK NO SCROLL (highlight no menu)
+// 7. ACTIVE LINK NO SCROLL (highlight no menu)
 // ============================================
 const sections = document.querySelectorAll('section[id], footer[id]');
 const navLinks  = document.querySelectorAll('#main-nav a[href^="#"]');
@@ -184,24 +240,11 @@ console.log('Sandra Amaral Fotografia — site carregado!');
 
 
 // ============================================
-// 7. FILTRO VIA URL (portfolio.html?filter=gestante)
-// ============================================
-const urlParams = new URLSearchParams(window.location.search);
-const urlFilter = urlParams.get('filter');
-if (urlFilter && document.querySelector('.filter-btn')) {
-    applyFilter(urlFilter);
-    filterBtns.forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.filter === urlFilter);
-    });
-}
-
-
-// ============================================
 // 8. FAQ ACCORDION (pacotes.html)
 // ============================================
 document.querySelectorAll('.faq-question').forEach(btn => {
     btn.addEventListener('click', () => {
-        const item = btn.parentElement;
+        const item   = btn.parentElement;
         const isOpen = item.classList.contains('open');
         // Fecha todos
         document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
@@ -218,11 +261,10 @@ const track   = document.getElementById('reviews-track');
 const dotsBox = document.getElementById('reviews-dots');
 
 if (track && dotsBox) {
-    const cards      = track.querySelectorAll('.review-card');
-    const realCount  = Math.ceil(cards.length / 2); // metade são duplicatas
-    let   currentDot = 0;
+    const cards     = track.querySelectorAll('.review-card');
+    const realCount = Math.ceil(cards.length / 2);
+    let currentDot  = 0;
 
-    // Cria os dots
     for (let i = 0; i < realCount; i++) {
         const dot = document.createElement('button');
         dot.className = 'dot' + (i === 0 ? ' active' : '');
@@ -245,7 +287,6 @@ if (track && dotsBox) {
         updateDots(index);
     }
 
-    // Atualiza dot ao rolar manualmente
     track.parentElement.addEventListener('scroll', () => {
         const scrollLeft = track.parentElement.scrollLeft;
         const cardWidth  = cards[0].offsetWidth + 28;
@@ -253,11 +294,10 @@ if (track && dotsBox) {
         updateDots(index);
     });
 
-    // Arrastar com o mouse
     let isDown = false, startX, scrollLeft;
     track.parentElement.addEventListener('mousedown', e => {
-        isDown = true;
-        startX = e.pageX - track.parentElement.offsetLeft;
+        isDown     = true;
+        startX     = e.pageX - track.parentElement.offsetLeft;
         scrollLeft = track.parentElement.scrollLeft;
         track.style.animation = 'none';
     });

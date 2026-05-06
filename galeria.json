@@ -1,0 +1,26 @@
+[
+  {
+    "src": "assets/img/portfolio/newborn/foto3.jpg",
+    "category": "newborn",
+    "label": "Newborn",
+    "alt": "Ensaio Newborn"
+  },
+  {
+    "src": "assets/img/portfolio/gestante/foto2.jpg",
+    "category": "gestante",
+    "label": "Gestante",
+    "alt": "Ensaio Gestante"
+  },
+  {
+    "src": "assets/img/portfolio/familia/foto1.jpg",
+    "category": "familia",
+    "label": "Família",
+    "alt": "Ensaio Família"
+  },
+  {
+    "src": "assets/img/portfolio/familia/foto4.jpg",
+    "category": "familia",
+    "label": "Família",
+    "alt": "Ensaio Família"
+  }
+]

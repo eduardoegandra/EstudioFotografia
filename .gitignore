@@ -21,14 +21,7 @@ build/
 .env.local
 .env.*.local
 
-# Images
-assets/img/
-*.jpg
-*.jpeg
-*.png
-*.gif
-*.svg
-*.webp
-*.bmp
-*.tiff
-*.ico
+# Ignora as fotos mas NÃO o galeria.json
+assets/img/portfolio/newborn/*
+assets/img/portfolio/gestante/*
+assets/img/portfolio/familia/*
